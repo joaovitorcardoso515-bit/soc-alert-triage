@@ -33,21 +33,26 @@ class WazuhAPI:
         return False
 
     def get_alerts(self, limit=10):
-        url = f"{self.base_url}/alerts?limit={limit}"
 
-        headers = {
-            "Authorization": f"Bearer {self.token}"
-        }
+    if not self.token:
+        self.authenticate()
 
-        response = requests.get(
-            url,
-            headers=headers,
-            verify=False
-        )
+    url = f"{self.base_url}/alerts?limit={limit}"
 
-        if response.status_code == 200:
-            return response.json()
+    headers = {
+        "Authorization": f"Bearer {self.token}"
+    }
 
-        print(f"❌ Erro ao buscar alertas: {response.status_code}")
-        print(response.text)
-        return None
+    response = requests.get(
+        url,
+        headers=headers,
+        verify=False
+    )
+
+    if response.status_code == 200:
+        return response.json()
+
+    print(f"Erro: {response.status_code}")
+    print(response.text)
+
+    return None

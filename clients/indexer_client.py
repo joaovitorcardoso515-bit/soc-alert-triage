@@ -19,5 +19,36 @@ class IndexerClient:
             ssl_show_warn=False,
         )
 
+
     def health(self):
         return self.client.cluster.health()
+
+
+    def indices(self):
+        return self.client.cat.indices(format="json")
+
+
+    def search_alerts(self, limit=10):
+
+        query = {
+            "size": limit,
+            "sort": [
+                {
+                    "timestamp": {
+                        "order": "desc"
+                    }
+                }
+            ],
+            "query": {
+                "match_all": {}
+            }
+        }
+
+
+        response = self.client.search(
+            index="wazuh-alerts-*",
+            body=query
+        )
+
+
+        return response["hits"]["hits"]
