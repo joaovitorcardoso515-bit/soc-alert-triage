@@ -1,5 +1,7 @@
-from wazuh_api import WazuhAPI
+from clients.indexer_client import IndexerClient
 
-api = WazuhAPI()
+client = IndexerClient()
 
-api.authenticate()
+health = client.health()
+
+print(health)
