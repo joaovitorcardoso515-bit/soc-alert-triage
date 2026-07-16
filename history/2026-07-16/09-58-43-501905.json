@@ -1,0 +1,43 @@
+{
+    "rule_id": "5715",
+    "level": 3,
+    "description": "sshd: authentication success.",
+    "agent": {
+        "id": "000",
+        "name": "wazuh-serv",
+        "ip": null
+    },
+    "network": {
+        "source_ip": "192.168.56.1",
+        "destination_ip": null,
+        "source_port": "62086",
+        "destination_port": null,
+        "protocol": null
+    },
+    "username": "wazuh",
+    "mitre": {
+        "id": [
+            "T1078",
+            "T1021"
+        ],
+        "tactic": [
+            "Defense Evasion",
+            "Persistence",
+            "Privilege Escalation",
+            "Initial Access",
+            "Lateral Movement"
+        ],
+        "technique": [
+            "Valid Accounts",
+            "Remote Services"
+        ]
+    },
+    "groups": [
+        "syslog",
+        "sshd",
+        "authentication_success"
+    ],
+    "decoder": "sshd",
+    "full_log": "Jul 16 12:04:32 wazuh-serv sshd[3801]: Accepted password for wazuh from 192.168.56.1 port 62086 ssh2",
+    "timestamp": "2026-07-16T12:04:33.280+0000"
+}

@@ -1,0 +1,37 @@
+{
+    "rule_id": "5402",
+    "level": 3,
+    "description": "Successful sudo to ROOT executed.",
+    "agent": {
+        "id": "000",
+        "name": "wazuh-serv",
+        "ip": null
+    },
+    "network": {
+        "source_ip": null,
+        "destination_ip": null,
+        "source_port": null,
+        "destination_port": null,
+        "protocol": null
+    },
+    "username": "wazuh",
+    "mitre": {
+        "id": [
+            "T1548.003"
+        ],
+        "tactic": [
+            "Privilege Escalation",
+            "Defense Evasion"
+        ],
+        "technique": [
+            "Sudo and Sudo Caching"
+        ]
+    },
+    "groups": [
+        "syslog",
+        "sudo"
+    ],
+    "decoder": "sudo",
+    "full_log": "Jul 16 13:11:10 wazuh-serv sudo[4917]:    wazuh : TTY=tty1 ; PWD=/home/wazuh ; USER=root ; COMMAND=/usr/bin/systemctl start ollama",
+    "timestamp": "2026-07-16T13:11:11.605+0000"
+}

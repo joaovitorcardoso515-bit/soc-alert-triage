@@ -1,0 +1,30 @@
+{
+    "rule_id": "5502",
+    "level": 3,
+    "description": "PAM: Login session closed.",
+    "agent": {
+        "id": "000",
+        "name": "wazuh-serv",
+        "ip": null
+    },
+    "network": {
+        "source_ip": null,
+        "destination_ip": null,
+        "source_port": null,
+        "destination_port": null,
+        "protocol": null
+    },
+    "username": "wazuh",
+    "mitre": {
+        "id": [],
+        "tactic": [],
+        "technique": []
+    },
+    "groups": [
+        "pam",
+        "syslog"
+    ],
+    "decoder": "pam",
+    "full_log": "Jul 16 12:04:27 wazuh-serv sshd[3546]: pam_unix(sshd:session): session closed for user wazuh",
+    "timestamp": "2026-07-16T12:04:27.246+0000"
+}

@@ -1,0 +1,40 @@
+{
+    "rule_id": "5501",
+    "level": 3,
+    "description": "PAM: Login session opened.",
+    "agent": {
+        "id": "000",
+        "name": "wazuh-serv",
+        "ip": null
+    },
+    "network": {
+        "source_ip": null,
+        "destination_ip": null,
+        "source_port": null,
+        "destination_port": null,
+        "protocol": null
+    },
+    "username": "wazuh",
+    "mitre": {
+        "id": [
+            "T1078"
+        ],
+        "tactic": [
+            "Defense Evasion",
+            "Persistence",
+            "Privilege Escalation",
+            "Initial Access"
+        ],
+        "technique": [
+            "Valid Accounts"
+        ]
+    },
+    "groups": [
+        "pam",
+        "syslog",
+        "authentication_success"
+    ],
+    "decoder": "pam",
+    "full_log": "Jul 16 13:11:10 wazuh-serv sudo[4917]: pam_unix(sudo:session): session opened for user root(uid=0) by wazuh(uid=1000)",
+    "timestamp": "2026-07-16T13:11:11.605+0000"
+}
