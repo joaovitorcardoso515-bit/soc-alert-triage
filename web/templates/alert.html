@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Alert #{{ alert.rule_id }} — AI SOC TRIAGE{% endblock %}
+{% block page_title %}Alert Detail{% endblock %}
+{% block page_subtitle %}Detalhes completos do alerta selecionado{% endblock %}
+
+{% block content %}
+<section class="alert-detail-page">
+    <div class="detail-grid">
+        <article class="card">
+            <div class="card-header">
+                <h2>Informações do Alerta</h2>
+                <span class="badge badge-{{ alert.risk|lower }}">{{ alert.risk }}</span>
+            </div>
+            <dl class="detail-list">
+                <div class="detail-row"><dt>Rule</dt><dd>{{ alert.rule_id or '—' }}</dd></div>
+                <div class="detail-row"><dt>Description</dt><dd>{{ alert.description or '—' }}</dd></div>
+                <div class="detail-row"><dt>Agent</dt><dd>{{ alert.agent or '—' }}</dd></div>
+                <div class="detail-row"><dt>Username</dt><dd>{{ alert.username or '—' }}</dd></div>
+                <div class="detail-row"><dt>Source IP</dt><dd>{{ alert.source_ip or '—' }}</dd></div>
+                <div class="detail-row"><dt>Destination IP</dt><dd>{{ alert.destination_ip or '—' }}</dd></div>
+                <div class="detail-row"><dt>Ports</dt><dd>{{ alert.src_port or '—' }} → {{ alert.dst_port or '—' }}</dd></div>
+                <div class="detail-row"><dt>MITRE</dt><dd>{{ alert.mitre or '—' }}</dd></div>
+                <div class="detail-row"><dt>Groups</dt><dd>{{ alert.groups|join(', ') if alert.groups else '—' }}</dd></div>
+                <div class="detail-row"><dt>Decoder</dt><dd>{{ alert.decoder or '—' }}</dd></div>
+                <div class="detail-row"><dt>Timestamp</dt><dd>{{ alert.timestamp or '—' }}</dd></div>
+                <div class="detail-row"><dt>Risk Score</dt><dd>{{ alert.score }}</dd></div>
+            </dl>
+            {% if alert.reasons %}
+            <div class="reasons-block">
+                <h3>Reasons</h3>
+                <ul>
+                    {% for reason in alert.reasons %}
+                    <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </article>
+
+        <article class="card ai-panel-card">
+            <div class="card-header">
+                <h2>AI PRE TRIAGE</h2>
+            </div>
+            {% if alert.ai %}
+            <dl class="detail-list">
+                <div class="detail-row"><dt>Summary</dt><dd>{{ alert.ai.summary or '—' }}</dd></div>
+                <div class="detail-row"><dt>Threat Assessment</dt><dd>{{ alert.ai.threat_assessment or '—' }}</dd></div>
+                <div class="detail-row"><dt>Reason</dt><dd>{{ alert.ai.reason or '—' }}</dd></div>
+                <div class="detail-row">
+                    <dt>Recommended Actions</dt>
+                    <dd>
+                        {% if alert.ai.recommended_actions %}
+                        <ul class="actions-list">
+                            {% for action in alert.ai.recommended_actions %}
+                            <li>{{ action }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}—{% endif %}
+                    </dd>
+                </div>
+                <div class="detail-row"><dt>Confidence</dt><dd>{{ alert.ai.confidence if alert.ai.confidence is not none else '—' }}</dd></div>
+            </dl>
+            {% else %}
+            <p class="ai-unavailable">Análise de IA não disponível para este alerta.</p>
+            {% endif %}
+        </article>
+    </div>
+
+    <a href="/" class="btn btn-secondary back-link">&larr; Voltar ao Dashboard</a>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof updateMetaHeader === 'function') {
+            updateMetaHeader({ total: 1, last_update: null, ollama_online: false });
+        }
+    });
+</script>
+{% endblock %}

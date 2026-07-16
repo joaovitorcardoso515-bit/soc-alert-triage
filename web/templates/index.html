@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — AI SOC TRIAGE{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Visão geral de alertas, riscos e triagem com IA{% endblock %}
+
+{% block content %}
+<section class="stats-grid" id="stats-grid">
+    <article class="stat-card stat-total">
+        <div class="stat-icon">&#128202;</div>
+        <div class="stat-body">
+            <span class="stat-label">Total Alerts</span>
+            <span class="stat-value" id="stat-total">0</span>
+        </div>
+    </article>
+    <article class="stat-card stat-critical">
+        <div class="stat-icon">&#128308;</div>
+        <div class="stat-body">
+            <span class="stat-label">Critical</span>
+            <span class="stat-value" id="stat-critical">0</span>
+        </div>
+    </article>
+    <article class="stat-card stat-high">
+        <div class="stat-icon">&#128992;</div>
+        <div class="stat-body">
+            <span class="stat-label">High</span>
+            <span class="stat-value" id="stat-high">0</span>
+        </div>
+    </article>
+    <article class="stat-card stat-medium">
+        <div class="stat-icon">&#128993;</div>
+        <div class="stat-body">
+            <span class="stat-label">Medium</span>
+            <span class="stat-value" id="stat-medium">0</span>
+        </div>
+    </article>
+    <article class="stat-card stat-low">
+        <div class="stat-icon">&#128994;</div>
+        <div class="stat-body">
+            <span class="stat-label">Low</span>
+            <span class="stat-value" id="stat-low">0</span>
+        </div>
+    </article>
+</section>
+
+<section class="charts-section">
+    <article class="card chart-card">
+        <div class="card-header">
+            <h2>Distribuição por Risco</h2>
+        </div>
+        <div class="chart-container">
+            <canvas id="risk-pie"></canvas>
+        </div>
+    </article>
+    <article class="card chart-card">
+        <div class="card-header">
+            <h2>Alertas por Agente</h2>
+        </div>
+        <div class="chart-container">
+            <canvas id="agent-bar"></canvas>
+        </div>
+    </article>
+</section>
+
+<section class="card alerts-section" id="alerts-section">
+    <div class="card-header">
+        <h2>Alertas Recentes</h2>
+        <button class="btn btn-secondary" id="refresh-btn">Atualizar</button>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input type="search" id="search-input" placeholder="Buscar por IP, usuário, Rule ID ou descrição..." autocomplete="off">
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Risco</span>
+                <div class="filter-chips">
+                    <label class="chip chip-low"><input type="checkbox" class="filter-risk" value="LOW"> LOW</label>
+                    <label class="chip chip-medium"><input type="checkbox" class="filter-risk" value="MEDIUM"> MEDIUM</label>
+                    <label class="chip chip-high"><input type="checkbox" class="filter-risk" value="HIGH"> HIGH</label>
+                    <label class="chip chip-critical"><input type="checkbox" class="filter-risk" value="CRITICAL"> CRITICAL</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label" for="filter-agent">Agent</label>
+                <select id="filter-agent" class="select">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label" for="filter-mitre">MITRE</label>
+                <select id="filter-mitre" class="select">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table class="alerts-table" id="alerts-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Risk</th>
+                    <th>Rule ID</th>
+                    <th>Agent</th>
+                    <th>Description</th>
+                    <th>MITRE</th>
+                    <th>Source IP</th>
+                    <th>AI</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="empty-state hidden" id="empty-state">
+        <p>Nenhum alerta encontrado com os filtros aplicados.</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="/static/js/charts.js"></script>
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

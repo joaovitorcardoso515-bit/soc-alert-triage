@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Settings — AI SOC TRIAGE{% endblock %}
+{% block page_title %}Settings{% endblock %}
+{% block page_subtitle %}Configurações da plataforma de triagem{% endblock %}
+
+{% block content %}
+<section class="card settings-section">
+    <div class="card-header">
+        <h2>Configurações</h2>
+    </div>
+    <div class="panel-section">
+        <dl class="detail-list">
+            <div class="detail-row"><dt>Plataforma</dt><dd>AI SOC Triage v1.0.0</dd></div>
+            <div class="detail-row"><dt>Backend</dt><dd>FastAPI + Jinja2</dd></div>
+            <div class="detail-row"><dt>Fonte de alertas</dt><dd>Wazuh Indexer (OpenSearch)</dd></div>
+            <div class="detail-row"><dt>Engines</dt><dd>RulesEngine, RiskEngine</dd></div>
+            <div class="detail-row"><dt>IA</dt><dd id="settings-ollama-status">Verificando...</dd></div>
+        </dl>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        try {
+            const res = await fetch("/health/ollama", { headers: { Accept: "application/json" } });
+            const data = await res.json();
+            const el = document.getElementById("settings-ollama-status");
+            if (el) {
+                el.textContent = data.status === "online" ? "Ollama Online" : "Ollama Offline";
+            }
+            if (typeof updateMetaHeader === "function") {
+                updateMetaHeader({
+                    total: 0,
+                    last_update: null,
+                    ollama_online: data.status === "online",
+                });
+            }
+        } catch {
+            const el = document.getElementById("settings-ollama-status");
+            if (el) el.textContent = "Indisponível";
+        }
+    });
+</script>
+{% endblock %}

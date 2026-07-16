@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}History — AI SOC TRIAGE{% endblock %}
+{% block page_title %}History{% endblock %}
+{% block page_subtitle %}Histórico completo de alertas analisados{% endblock %}
+
+{% block content %}
+<section class="card history-section">
+    <div class="card-header">
+        <h2>Histórico de Alertas</h2>
+        <button class="btn btn-secondary" id="refresh-history">Atualizar</button>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input type="search" id="history-search" placeholder="Buscar no histórico..." autocomplete="off">
+        </div>
+
+        <div class="filters filters-inline">
+            <div class="filter-group">
+                <label class="filter-label" for="history-sort">Ordenar por</label>
+                <select id="history-sort" class="select">
+                    <option value="timestamp">Timestamp</option>
+                    <option value="risk">Risk</option>
+                    <option value="rule_id">Rule ID</option>
+                    <option value="agent">Agent</option>
+                    <option value="score">Score</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label" for="history-order">Ordem</label>
+                <select id="history-order" class="select">
+                    <option value="desc">Descendente</option>
+                    <option value="asc">Ascendente</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Risco</span>
+                <div class="filter-chips">
+                    <label class="chip chip-low"><input type="checkbox" class="history-filter-risk" value="LOW"> LOW</label>
+                    <label class="chip chip-medium"><input type="checkbox" class="history-filter-risk" value="MEDIUM"> MEDIUM</label>
+                    <label class="chip chip-high"><input type="checkbox" class="history-filter-risk" value="HIGH"> HIGH</label>
+                    <label class="chip chip-critical"><input type="checkbox" class="history-filter-risk" value="CRITICAL"> CRITICAL</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table class="alerts-table" id="history-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Risk</th>
+                    <th>Score</th>
+                    <th>Rule ID</th>
+                    <th>Agent</th>
+                    <th>Description</th>
+                    <th>MITRE</th>
+                    <th>Source IP</th>
+                    <th>AI</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="empty-state hidden" id="history-empty">
+        <p>Nenhum registro no histórico.</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js"></script>
+<script src="/static/js/history.js"></script>
+{% endblock %}

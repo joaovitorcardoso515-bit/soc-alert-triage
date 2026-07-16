@@ -1,10 +1,15 @@
 certifi==2026.6.17
 charset-normalizer==3.4.9
+fastapi>=0.109.0
 idna==3.18
+Jinja2>=3.1.0
 markdown-it-py==4.2.0
 mdurl==0.1.2
+opensearch-py>=2.4.0
 Pygments==2.20.0
 python-dotenv==1.2.2
+python-multipart>=0.0.6
 requests==2.34.2
 rich==15.0.0
 urllib3==2.7.0
+uvicorn[standard]>=0.27.0

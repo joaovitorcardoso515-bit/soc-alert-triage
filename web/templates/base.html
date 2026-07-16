@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI SOC TRIAGE{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">&#9670;</span>
+                <span class="logo-text">AI SOC TRIAGE</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/" class="nav-item {% if page == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon">&#9632;</span>
+                Dashboard
+            </a>
+            <a href="/#alerts-section" class="nav-item {% if page == 'alerts' %}active{% endif %}">
+                <span class="nav-icon">&#9888;</span>
+                Alerts
+            </a>
+            <a href="/history" class="nav-item {% if page == 'history' %}active{% endif %}">
+                <span class="nav-icon">&#8634;</span>
+                History
+            </a>
+            <a href="/settings" class="nav-item {% if page == 'settings' %}active{% endif %}">
+                <span class="nav-icon">&#9881;</span>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <span class="sidebar-version">v1.0.0</span>
+        </div>
+    </aside>
+
+    <div class="layout-main">
+        <header class="top-bar">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menu">&#9776;</button>
+            <div class="top-bar-left">
+                <h1 class="page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+                <p class="page-subtitle">{% block page_subtitle %}Monitoramento e triagem de alertas de segurança{% endblock %}</p>
+            </div>
+            <div class="top-bar-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Última atualização</span>
+                    <span class="meta-value" id="last-update">--</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Alertas</span>
+                    <span class="meta-value" id="alert-count">0</span>
+                </div>
+                <div class="meta-item ai-status-wrap">
+                    <span class="meta-label">Status IA</span>
+                    <span class="ai-status" id="ai-status">
+                        <span class="status-dot"></span>
+                        <span id="ai-status-text">Verificando...</span>
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <div class="overlay hidden" id="overlay"></div>
+    <aside class="detail-panel" id="detail-panel" aria-hidden="true">
+        <div class="detail-panel-inner" id="detail-panel-content"></div>
+    </aside>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
